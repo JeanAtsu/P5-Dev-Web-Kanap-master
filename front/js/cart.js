@@ -12,11 +12,13 @@ async function displayCart()
   }
 
   console.log(myCart);
+  
   ////////////////////////
   const cart__items = document.querySelector("#cart__items");
 
-
-   
+  //Total init
+  let totalP = 0;
+  let totalQ = 0;
 
   for (cart of myCart)
   {
@@ -32,10 +34,10 @@ async function displayCart()
       console.log(product._id);
   
       const cart__item = document.createElement("article");
-      cart__item.class ="cart__item";
+      cart__item.classList.add("cart__item");
       //Image
       const cart__item__img = document.createElement("div");
-      cart__item__img.class="cart__item__img";
+      cart__item__img.classList.add("cart__item__img");
       const image = document.createElement("img");
       image.alt = "Photographie d'un canapé";
       image.src = product.imageUrl;
@@ -44,13 +46,13 @@ async function displayCart()
 
       //Item content
       cart__item__content = document.createElement("div");
-      cart__item__content.class="cart__item__content";
+      cart__item__content.classList.add("cart__item__content");
       
       //Content description
       cart__item__content__description = document.createElement("div");
-      cart__item__content__description.class="cart__item__content__description";
+      cart__item__content__description.classList.add("cart__item__content__description");
       const name = document.createElement("h2");
-      name.innerText = "Article : " +  product.name;
+      name.innerText = "Produit : " +  product.name;
       const color = document.createElement("p");
       color.innerText = "Couleur : " + cart.colors;
       const price = document.createElement("p");
@@ -64,24 +66,23 @@ async function displayCart()
 
       //Qty
       cart__item__content__settings__quantity = document.createElement("div");
-      cart__item__content__settings__quantity.class ="cart__item__content__settings__quantity";
+      cart__item__content__settings__quantity.classList.add("cart__item__content__settings__quantity");
       
       const qtyLabel = document.createElement("p");
-      qtyLabel.innerText = "Qté : ";
+      qtyLabel.innerText = "Quantité : ";
       const qtyObj = document.createElement("input");
       qtyObj.type = "number";
-      qtyObj.class = "itemQuantity";
+      qtyObj.classList.add("itemQuantity");
       qtyObj.name = "itemQuantity";
       qtyObj.min = "1";
       qtyObj.max = "100";
       qtyObj.value = cart.qty;
+      //qtyObj.addEventListener("change", updateQty, false);
 
-      
-      //
       //Content settings
       
       cart__item__content__settings = document.createElement("div");
-      cart__item__content__settings.class ="cart__item__content__settings";
+      cart__item__content__settings.classList.add("cart__item__content__settings");
       
       cart__item__content__settings__quantity.appendChild(qtyLabel);
       cart__item__content__settings__quantity.appendChild(qtyObj);
@@ -92,14 +93,19 @@ async function displayCart()
       
       //Delete
       const cart__item__content__settings__delete = document.createElement("div");
-      cart__item__content__settings__delete.class = "cart__item__content__settings__delete";
+      cart__item__content__settings__delete.classList.add("cart__item__content__settings__delete");
       const deleteFct = document.createElement("p");
-      deleteFct.class = "deleteItem";
+      deleteFct.classList.add("deleteItem");
       deleteFct.innerText ="Supprimer";
       cart__item__content__settings__delete.appendChild(deleteFct);
 
-     
-      ////
+      //Total Qty
+      totalQty();
+      
+      //Total price
+      totalPrice(product);
+      
+      //Update DOM
       cart__item__content__settings.appendChild(cart__item__content__description);
       cart__item__content__settings.appendChild(cart__item__content__settings__quantity);
       cart__item__content__settings.appendChild(cart__item__content__settings__delete);
@@ -110,6 +116,22 @@ async function displayCart()
       //
       cart__items.appendChild(cart__item);
 
+  }
+
+   //Total price
+  function totalPrice(product) {
+    const totalPrice = document.querySelector("#totalPrice");
+    totalP += Number.parseInt(product.price);
+    totalPrice.innerText = totalP;
+    console.log(totalP);
+  }
+   //Total Qty
+  function totalQty() 
+  {
+    const totalQty = document.querySelector("#totalQuantity");
+    totalQ += Number.parseInt(cart.qty);
+    totalQty.innerText = totalQ;
+    console.log(totalQ);
   }
 }
 displayCart();
