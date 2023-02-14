@@ -160,7 +160,7 @@ function addListenerToDelete(){
 }
 
 //Execution du code
-const products =  getDataFromAPI();
+const products = await getDataFromAPI();
 const myCart = getCartFromStorage();
 displayCart(myCart, products)
 calculateTotalQuantity(myCart)
