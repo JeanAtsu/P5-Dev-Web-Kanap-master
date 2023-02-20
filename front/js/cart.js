@@ -166,13 +166,13 @@ function addListenerToDelete()
   })
 }
 //Export data
-export function addListenerEnvoyerCommande() {
-  const formulaireCommande = document.querySelector(".cart__order__form");
-  formulaireCommande.addEventListener("submit", function (event) {
+export function addListenerUserInfo() {
+  const formulaireUserInfo = document.querySelector(".cart__order__form");
+  formulaireUserInfo.addEventListener("submit", function (event) {
   // Désactivation / défaut du navigateur
   event.preventDefault();
 
-  const orderUser = {
+  const user = {
     prenom: event.target.querySelector("[name=firstName]").value,
     nom: event.target.querySelector("[name=lastName").value,
     adresse: event.target.querySelector("[name=address]").value,
@@ -181,7 +181,7 @@ export function addListenerEnvoyerCommande() {
   };
 
   // Charge utile au format JSON
-  const chargeUtile = JSON.stringify(orderUser);
+  const chargeUtile = JSON.stringify(user);
 
   console.log(chargeUtile);
 
@@ -203,4 +203,4 @@ calculateTotalQuantity(myCart);
 calculateTotalPrice(myCart, products);
 addListenerToQty(products);
 addListenerToDelete();
-addListenerEnvoyerCommande();
+addListenerUserInfo();
