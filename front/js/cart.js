@@ -166,30 +166,44 @@ function addListenerToDelete()
   })
 }
 //Export data
-export function addListenerUserInfo() {
+function addListenerUserInfo() 
+{
   const formulaireUserInfo = document.querySelector(".cart__order__form");
-  formulaireUserInfo.addEventListener("submit", function (event) {
+  formulaireUserInfo.addEventListener("submit", async function (event) {
   // Désactivation / défaut du navigateur
   event.preventDefault();
 
-  const user = {
-    prenom: event.target.querySelector("[name=firstName]").value,
-    nom: event.target.querySelector("[name=lastName").value,
-    adresse: event.target.querySelector("[name=address]").value,
-    ville: event.target.querySelector("[name=city").value,
+  const contact = {
+    firstName: event.target.querySelector("[name=firstName]").value,
+    lastName: event.target.querySelector("[name=lastName]").value,
+    address: event.target.querySelector("[name=address]").value,
+    city: event.target.querySelector("[name=city]").value,
     email: event.target.querySelector("[name=email]").value
-  };
+    };
+
+
+  //Récupérer le local storage
+  const myCart = getCartFromStorage();
+  const products = myCart.map(elt => elt.id);
+  const order = {contact, products};
+  //Créer un tableau avec les id de tous les produits du LS
+  //Créer un objet order contenant le contact + les produits
 
   // Charge utile au format JSON
-  const chargeUtile = JSON.stringify(user);
+  const chargeUtile = JSON.stringify(order);
 
   console.log(chargeUtile);
 
-  fetch("http://localhost:3000/api/products", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: chargeUtile
-    });
+  //const data = await fetch("http://localhost:3000/api/products");
+  //const products = await data.json();
+  const response = await fetch("http://localhost:3000/api/products/order", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: chargeUtile
+  });
+  const apiOrder = await response.json();
+  console.log(apiOrder.orderId);
+  window.location.href = "confirmation.html?orderId="+apiOrder.orderId;
   });
 }
 

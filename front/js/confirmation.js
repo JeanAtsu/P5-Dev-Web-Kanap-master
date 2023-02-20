@@ -1,31 +1,11 @@
 
-async function getDataFromAPI()
-{
-  const data = await fetch("http://localhost:3000/api/products");
-  const products = await data.json();
-  //console.log(products);
-  return products
-}
-//Récupérer les données du panier
-function getCartFromStorage()
-{
-  let myCart = [] ;
+//Retrieve id
+const url = new URL(window.location.href);
+var orderId = url.searchParams.get("orderId");
+console.log(orderId);
 
-  if (localStorage.getItem("myCart"))
-  {
-      myCart = JSON.parse(localStorage.getItem('myCart'));
-  }
-  //console.log(myCart);
-  return myCart
-}
-//Import data
-function importDataFromAPI()
-{
-  
-}
+const sectionOrder = document.querySelector("#orderId");
+sectionOrder.innerText = orderId;
+//remove cart
+localStorage.removeItem('myCart');
 
-//Exécution du code
-const products = await getDataFromAPI();
-console.log(products);
-const myCart = getCartFromStorage();
-console.log(myCart);
