@@ -3,8 +3,6 @@ async function displayProduct()
     const data = await fetch("http://localhost:3000/api/products");
     const products = await data.json();
 
-    
-
     class cart 
     {
         constructor(id, qty, colors) 
@@ -64,7 +62,6 @@ async function displayProduct()
         colorsObject.innerText = product.colors[i];
         colorSection.appendChild(colorsObject);
     } 
-
 
     //Add item to cart function  
     function addToCart() 
