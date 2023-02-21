@@ -18,7 +18,7 @@ function getCartFromStorage()
   //console.log(myCart);
   return myCart
 }
-//Afficher les éléments du DOM
+//Construire dynamiquement les éléments du DOM
 async function displayCart(myCart, products)
 {
   const cart__items = document.querySelector("#cart__items");
@@ -112,7 +112,7 @@ async function displayCart(myCart, products)
       cart__items.appendChild(cart__item);
   }
 }
-//Calculer les totaux
+//Calculer la quantité totale
 function calculateTotalQuantity(cart)
 {
   let total = 0;
@@ -121,6 +121,7 @@ function calculateTotalQuantity(cart)
   totalQtyElt.textContent = total;
 }
 
+//Calculer le prix total
 function calculateTotalPrice(cart, products)
 {
   let totalPrice = 0;
@@ -165,14 +166,16 @@ function addListenerToDelete()
     })
   })
 }
-//Export data
-function addListenerUserInfo() 
+//Listener - Valider la commande
+function addListenerContactInfo() 
 {
   const formulaireUserInfo = document.querySelector(".cart__order__form");
+
   formulaireUserInfo.addEventListener("submit", async function (event) {
   // Désactivation / défaut du navigateur
   event.preventDefault();
 
+  //Infos du contact
   const contact = {
     firstName: event.target.querySelector("[name=firstName]").value,
     lastName: event.target.querySelector("[name=lastName]").value,
@@ -181,40 +184,42 @@ function addListenerUserInfo()
     email: event.target.querySelector("[name=email]").value
     };
 
-
-  //Récupérer le local storage
+  //Récupérer les produits du local storage
   const myCart = getCartFromStorage();
-  const products = myCart.map(elt => elt.id);
-  const order = {contact, products};
-  //Créer un tableau avec les id de tous les produits du LS
-  //Créer un objet order contenant le contact + les produits
 
+  //Mappage - Récupérer les IDs du panier
+  const products = myCart.map(elt => elt.id);
+
+  //Construire l'ensemble des infos
+  const order = {contact, products};
+  
   // Charge utile au format JSON
   const chargeUtile = JSON.stringify(order);
 
-  console.log(chargeUtile);
-
-  //const data = await fetch("http://localhost:3000/api/products");
-  //const products = await data.json();
+  //Requête vers l'API
   const response = await fetch("http://localhost:3000/api/products/order", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: chargeUtile
   });
+
+  //Obtenir le réponse de l'API
   const apiOrder = await response.json();
-  console.log(apiOrder.orderId);
+  //console.log(apiOrder.orderId);
+
+  //Redirection vers la page de confirmation
   window.location.href = "confirmation.html?orderId="+apiOrder.orderId;
   });
 }
 
 //Exécution du code
 const products = await getDataFromAPI();
-console.log(products);
+
 const myCart = getCartFromStorage();
-console.log(myCart);
+
 displayCart(myCart, products);
 calculateTotalQuantity(myCart);
 calculateTotalPrice(myCart, products);
 addListenerToQty(products);
 addListenerToDelete();
-addListenerUserInfo();
+addListenerContactInfo();
