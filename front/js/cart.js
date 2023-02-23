@@ -29,9 +29,6 @@ async function displayCart(myCart, products)
       //Product object
       const product = products.find(product => product._id === cart.id);
 
-      console.log(product);
-      console.log(product._id);
-  
       const cart__item = document.createElement("article");
       cart__item.classList.add("cart__item");
       //Image
@@ -175,7 +172,7 @@ function addListenerContactInfo()
   // Désactivation / défaut du navigateur
   event.preventDefault();
 
-  //Infos du contact
+  //Infos contact
   const contact = {
     firstName: event.target.querySelector("[name=firstName]").value,
     lastName: event.target.querySelector("[name=lastName]").value,

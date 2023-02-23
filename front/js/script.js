@@ -1,3 +1,4 @@
+// Affichage de tous les produits disponibles
 async function displayProducts()
 {
   const data = await fetch("http://localhost:3000/api/products");
@@ -6,10 +7,9 @@ async function displayProducts()
 
   const sectionFiches = document.querySelector("#items");
 
-  //select all items
   for (let product of products)
   {
-    //Redirect link
+    //Lien de redirection vers page produit
     const linkObject = document.createElement("a");
     linkObject.href = "./product.html?id=" + product._id;
     
@@ -19,11 +19,11 @@ async function displayProducts()
     imageObject.alt = product.altTxt;
     imageObject.src = product.imageUrl;
 
-    //Name
+    //Nom du produit
     const nameObject = document.createElement("h3");
     nameObject.innerText = product.name;
     
-    //Update design
+    //Mise à jour du DOM
     articleObject.appendChild(imageObject);
     articleObject.appendChild(nameObject);
     linkObject.appendChild(articleObject);
