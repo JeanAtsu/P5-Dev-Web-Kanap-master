@@ -169,7 +169,8 @@ function addListenerContactInfo()
   const formulaireUserInfo = document.querySelector(".cart__order__form");
 
   formulaireUserInfo.addEventListener("submit", async function (event) {
-  // Désactivation / défaut du navigateur
+  
+  // Browser Default OFF
   event.preventDefault();
 
   //Infos contact
@@ -181,35 +182,35 @@ function addListenerContactInfo()
     email: event.target.querySelector("[name=email]").value
     };
 
-  //Récupérer les produits du local storage
+  //local storage
   const myCart = getCartFromStorage();
 
-  //Mappage - Récupérer les IDs du panier
+  //Mappage - IDs panier
   const products = myCart.map(elt => elt.id);
 
-  //Construire l'ensemble des infos
+  //Infos
   const order = {contact, products};
   
-  // Charge utile au format JSON
+  // Charge utile 
   const chargeUtile = JSON.stringify(order);
 
-  //Requête vers l'API
+  //Requête
   const response = await fetch("http://localhost:3000/api/products/order", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: chargeUtile
   });
 
-  //Obtenir le réponse de l'API
+  //Order Id 
   const apiOrder = await response.json();
   //console.log(apiOrder.orderId);
 
-  //Redirection vers la page de confirmation
+  //Redirect - Confirm
   window.location.href = "confirmation.html?orderId="+apiOrder.orderId;
   });
 }
 
-//Exécution du code
+//Program
 const products = await getDataFromAPI();
 
 const myCart = getCartFromStorage();

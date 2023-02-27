@@ -19,7 +19,7 @@ async function displayProduct()
     const url = new URL(window.location.href);
     var id = url.searchParams.get("id");
     
-    //Récupérer l'objet produit
+    //Objet produit
     function myProduct(product) 
     {
         return product._id === id;
@@ -62,7 +62,7 @@ async function displayProduct()
     //Ajouter le produit au panier
     function addToCart() 
     { 
-        //Initialisation du panier
+        
         var myCart = [] ;
 
         if (localStorage.getItem("myCart") && JSON.parse(localStorage.getItem('myCart') != null))
@@ -70,7 +70,7 @@ async function displayProduct()
             myCart = JSON.parse(localStorage.getItem('myCart'));
         }
 
-        //Nouvelle ligne de panier
+        //New cart
         const cartLine = new cart(product._id, Number.parseInt(document.querySelector("#quantity").value), document.querySelector("#colors").value);   
         
         //Modification quantité
@@ -146,8 +146,7 @@ async function displayProduct()
                     }
                 }
             }               
-        } 
-        
+        }       
         // Mise à jour du Local storage
         localStorage.setItem('myCart', JSON.stringify(myCart));
 

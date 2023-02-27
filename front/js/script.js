@@ -9,7 +9,7 @@ async function displayProducts()
 
   for (let product of products)
   {
-    //Lien de redirection vers page produit
+    //Redirect page produit
     const linkObject = document.createElement("a");
     linkObject.href = "./product.html?id=" + product._id;
     
