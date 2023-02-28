@@ -175,7 +175,7 @@ function checkContactData(contact)
 
   let ret = true;
 
-  //
+  //firstName
   if (!regexFirstName.test(contact.firstName))
   {
     document.querySelector('#firstNameErrorMsg').innerText = "Le format n'est pas bon...";
@@ -186,7 +186,7 @@ function checkContactData(contact)
     document.querySelector('#firstNameErrorMsg').innerText = "";
   }
 
-  //
+  //lastName
   if (!regexLastName.test(contact.lastName))
   {
     document.querySelector('#lastNameErrorMsg').innerText = "Le format n'est pas bon...";
@@ -197,7 +197,7 @@ function checkContactData(contact)
     document.querySelector('#lastNameErrorMsg').innerText = "";
   }
   
-  //
+  //address
   if (contact.address.length < 5)
   {
     document.querySelector('#addressErrorMsg').innerText = "Le format d'adresse doit comporter plus de 5 caractères !";
@@ -208,7 +208,7 @@ function checkContactData(contact)
     document.querySelector('#addressErrorMsg').innerText = "";
   }
   
-  //
+  //city
   if (!regexCity.test(contact.city))
   {
     document.querySelector('#cityErrorMsg').innerText = "Le format de ville n'est pas bon...";
@@ -219,7 +219,7 @@ function checkContactData(contact)
     document.querySelector('#cityErrorMsg').innerText = "";
   }
 
-  //
+  //email
   if (!regexEmail.test(contact.email))
   {
     document.querySelector('#emailErrorMsg').innerText = "Le format d'email n'est pas bon...";
@@ -254,7 +254,6 @@ function addListenerContactInfo()
     };
 
   //Data format error
-  
   let check = checkContactData(contact);
   if (!check)
   {
@@ -285,7 +284,7 @@ function addListenerContactInfo()
   const apiOrder = await response.json();
   //console.log(apiOrder.orderId);
 
-  //Redirect - Confirm
+  //Redirect to Confirm
   window.location.href = "confirmation.html?orderId="+apiOrder.orderId;
   });
 }
