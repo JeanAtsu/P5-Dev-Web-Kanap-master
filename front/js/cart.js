@@ -163,11 +163,82 @@ function addListenerToDelete()
     })
   })
 }
+
+//check data
+//Return bool
+function checkContactData(contact)
+{
+  const regexFirstName = /^(?=.{2,50}$)[A-Za-zÀ-ÖØ-öø-ÿ]+(?:['_.\s][a-z]+)*$/gm;
+  const regexLastName = /^(?=.{2,50}$)[A-Za-zÀ-ÖØ-öø-ÿ]+(?:['_.\s][a-z]+)*$/gm;
+  const regexEmail = /^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/gm;
+  const regexCity = /^(?=.{2,50}$)[A-Za-zÀ-ÖØ-öø-ÿ]+(?:['_.\s][a-z]+)*$/gm;
+
+  let ret = true;
+
+  //
+  if (!regexFirstName.test(contact.firstName))
+  {
+    document.querySelector('#firstNameErrorMsg').innerText = "Le format n'est pas bon...";
+    ret = false;
+  }
+  else
+  {
+    document.querySelector('#firstNameErrorMsg').innerText = "";
+  }
+
+  //
+  if (!regexLastName.test(contact.lastName))
+  {
+    document.querySelector('#lastNameErrorMsg').innerText = "Le format n'est pas bon...";
+    ret = false;
+  }
+  else
+  {
+    document.querySelector('#lastNameErrorMsg').innerText = "";
+  }
+  
+  //
+  if (contact.address.length < 5)
+  {
+    document.querySelector('#addressErrorMsg').innerText = "Le format d'adresse doit comporter plus de 5 caractères !";
+    ret = false;
+  }
+  else
+  {
+    document.querySelector('#addressErrorMsg').innerText = "";
+  }
+  
+  //
+  if (!regexCity.test(contact.city))
+  {
+    document.querySelector('#cityErrorMsg').innerText = "Le format de ville n'est pas bon...";
+    ret = false;
+  }
+  else
+  {
+    document.querySelector('#cityErrorMsg').innerText = "";
+  }
+
+  //
+  if (!regexEmail.test(contact.email))
+  {
+    document.querySelector('#emailErrorMsg').innerText = "Le format d'email n'est pas bon...";
+    ret = false;
+  }
+  else
+  {
+    document.querySelector('#emailErrorMsg').innerText = "";
+  }
+
+  return ret;
+}
 //Listener - Valider la commande
 function addListenerContactInfo() 
 {
+
   const formulaireUserInfo = document.querySelector(".cart__order__form");
 
+  
   formulaireUserInfo.addEventListener("submit", async function (event) {
   
   // Browser Default OFF
@@ -181,6 +252,15 @@ function addListenerContactInfo()
     city: event.target.querySelector("[name=city]").value,
     email: event.target.querySelector("[name=email]").value
     };
+
+  //Data format error
+  
+  let check = checkContactData(contact);
+  if (!check)
+  {
+    alert("Erreur format...");
+    return;
+  }
 
   //local storage
   const myCart = getCartFromStorage();
@@ -221,3 +301,4 @@ calculateTotalPrice(myCart, products);
 addListenerToQty(products);
 addListenerToDelete();
 addListenerContactInfo();
+checkContactData(contact);
