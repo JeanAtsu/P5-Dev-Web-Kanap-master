@@ -168,8 +168,9 @@ function addListenerToDelete()
 //Return bool
 function checkContactData(contact)
 {
-  const regexFirstName = /^(?=.{2,50}$)[A-Za-zÀ-ÖØ-öø-ÿ]+(?:['_.\s][a-z]+)*$/gm;
-  const regexLastName = /^(?=.{2,50}$)[A-Za-zÀ-ÖØ-öø-ÿ]+(?:['_.\s][a-z]+)*$/gm;
+ 
+  const regexFirstName = /^(?=.{2,50}$)[A-Za-zÀ-ÖØ-öø-ÿ]+(?:['_.\-\s][A-Za-zÀ-ÖØ-öø-ÿ]+)*$/gm;
+  const regexLastName = /^(?=.{2,50}$)[A-Za-zÀ-ÖØ-öø-ÿ]+(?:['_.\-\s][A-Za-zÀ-ÖØ-öø-ÿ]+)*$/gm;
   const regexEmail = /^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/gm;
   const regexCity = /^(?=.{2,50}$)[A-Za-zÀ-ÖØ-öø-ÿ]+(?:['_.\s][a-z]+)*$/gm;
 
@@ -246,11 +247,11 @@ function addListenerContactInfo()
 
   //Infos contact
   const contact = {
-    firstName: event.target.querySelector("[name=firstName]").value,
-    lastName: event.target.querySelector("[name=lastName]").value,
-    address: event.target.querySelector("[name=address]").value,
-    city: event.target.querySelector("[name=city]").value,
-    email: event.target.querySelector("[name=email]").value
+    firstName: event.target.querySelector("[name=firstName]").value.trim(),
+    lastName: event.target.querySelector("[name=lastName]").value.trim(),
+    address: event.target.querySelector("[name=address]").value.trim(),
+    city: event.target.querySelector("[name=city]").value.trim(),
+    email: event.target.querySelector("[name=email]").value.trim()
     };
 
   //Data format error

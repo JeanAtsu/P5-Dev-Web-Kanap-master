@@ -101,7 +101,9 @@ async function displayProduct()
             for (let i=0;i< myCart.length;i++)
             {
                 if (myCart[i].colors == cartLine.colors)
+                {
                     ref = true;
+                }
             }
             return ref;
         }
@@ -119,19 +121,25 @@ async function displayProduct()
         let idExist = existId(myCart);
         let colorExist = existColor(myCart);
         let qtyZero = isNullQty();
-        
+ 
         if (!idExist && !colorExist)
         {
-        if (!qtyZero)
-        {
-            myCart.push(cartLine);
-            alert("Ajouté au panier")
-        }
-        else
-        {
-            alert("La quantité est nulle !!!");
-            console.log("La quantité est nulle !!!");
-        }
+            if (!qtyZero)
+            {
+                if (cartLine.colors == "")
+                {
+                    alert("La couleur n'est pas choisie !!!")
+                }
+                else
+                {
+                    myCart.push(cartLine);
+                    alert("Ajouté au panier")
+                }              
+            }
+            else
+            {
+                alert("La quantité est nulle !!!");
+            }
         }
         else
         {
