@@ -3,7 +3,7 @@ async function getDataFromAPI()
 {
   const data = await fetch("http://localhost:3000/api/products");
   const products = await data.json();
-  //console.log(products);
+ 
   return products
 }
 //Récupérer les données du panier
@@ -15,7 +15,7 @@ function getCartFromStorage()
   {
       myCart = JSON.parse(localStorage.getItem('myCart'));
   }
-  //console.log(myCart);
+  
   return myCart
 }
 //Construire dynamiquement les éléments du DOM
@@ -131,16 +131,36 @@ function calculateTotalPrice(cart, products)
   
 }
 
+//Test quantity
+function isQtyKo(cartLine)
+{
+    if ((Number.parseInt(cartLine.qty) <= 0) || (Number.parseInt(cartLine.qty) > 100))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 //Listener - Modifier les quantités
 function addListenerToQty()
 {
   const qtyInputs = Array.from(document.querySelectorAll('.itemQuantity'));
   qtyInputs.forEach(input => {
     input.addEventListener('change', (e)=> {
+
       const index = e.target.dataset.index;
-      console.log(index, e.target.value);
       const cart = getCartFromStorage();
       cart[index].qty = e.target.value;
+
+      if (isQtyKo(cart[index]))
+      {
+        alert("Attention... la quantité est incorrecte !!!");
+        cart[index].qty = 1;
+        return;
+      }
       localStorage.setItem('myCart', JSON.stringify(cart));
       calculateTotalQuantity(cart);
       calculateTotalPrice(cart, products);
@@ -265,6 +285,7 @@ function addListenerContactInfo()
   //local storage
   const myCart = getCartFromStorage();
 
+
   //Mappage - IDs panier
   const products = myCart.map(elt => elt.id);
 
@@ -283,7 +304,6 @@ function addListenerContactInfo()
 
   //Order Id 
   const apiOrder = await response.json();
-  //console.log(apiOrder.orderId);
 
   //Redirect to Confirm
   window.location.href = "confirmation.html?orderId="+apiOrder.orderId;

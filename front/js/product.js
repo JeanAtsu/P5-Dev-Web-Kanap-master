@@ -108,23 +108,27 @@ async function displayProduct()
             return ref;
         }
 
-        //Null quantity
-        function isNullQty()
+        //Test quantity
+        function isQtyKo()
         {
-            if (Number.parseInt(cartLine.qty) == 0)
+            if ((Number.parseInt(cartLine.qty) <= 0) || (Number.parseInt(cartLine.qty) > 100))
+            {
                 return true;
+            }
             else
+            {
                 return false;
+            }
         }
 
         //Mise à jour du panier
         let idExist = existId(myCart);
         let colorExist = existColor(myCart);
-        let qtyZero = isNullQty();
+        let qtyKo = isQtyKo();
  
         if (!idExist && !colorExist)
         {
-            if (!qtyZero)
+            if (!qtyKo)
             {
                 if (cartLine.colors == "")
                 {
@@ -132,13 +136,15 @@ async function displayProduct()
                 }
                 else
                 {
+                
                     myCart.push(cartLine);
                     alert("Ajouté au panier")
                 }              
             }
             else
             {
-                alert("La quantité est nulle !!!");
+                alert("La quantité est incorrecte !!!");
+                return;
             }
         }
         else
@@ -148,7 +154,7 @@ async function displayProduct()
                 if (myCart[i].colors == cartLine.colors)
                 {
                     updateQty(i,Number.parseInt(cartLine.qty));
-                    if (!qtyZero)
+                    if (!qtyKo)
                     {
                         alert("Ajouté au panier")
                     }

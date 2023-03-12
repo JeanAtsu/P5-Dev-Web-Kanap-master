@@ -3,7 +3,6 @@ async function displayProducts()
 {
   const data = await fetch("http://localhost:3000/api/products");
   const products = await data.json();
-  console.log(products); 
 
   const sectionFiches = document.querySelector("#items");
 
